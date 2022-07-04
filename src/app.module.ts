@@ -1,15 +1,18 @@
-import { ConfigurationServeStaticModule } from './configuration/configuration.serveStatic.module';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from "@nestjs/config";
+
+import { ConfigurationServeStaticModule } from './configuration/configuration.serveStatic.module';
 import { ConfigurationDataBaseModule } from './configuration/configuration.database.module';
 import { ConfigurationEnvValidationModule } from './configuration/configuration.envValidation.module';
 
+import { UserModule } from './modules/user/user.module';
 
 @Module({
-  imports: [
-    ConfigurationEnvValidationModule,
-    ConfigurationDataBaseModule,
-    ConfigurationServeStaticModule,
-  ]
+    imports: [
+        ConfigurationEnvValidationModule,
+        ConfigurationDataBaseModule,
+        ConfigurationServeStaticModule,
+
+        UserModule,
+    ]
 })
-export class AppModule {}
+export class AppModule { }
