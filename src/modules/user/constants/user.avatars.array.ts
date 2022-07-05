@@ -1,4 +1,4 @@
-export const UserAvatarsEnum: Array<string> = [
+export const UserAvatarsArray: Array<string> = [
   "https://i.ibb.co/tmj7Fjg/blue-purple.png",
   "https://i.ibb.co/1sQ886M/blue-yellow.png",
   "https://i.ibb.co/2NSh4y7/dark-Blue-dark-Red-black.png",

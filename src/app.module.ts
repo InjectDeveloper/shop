@@ -6,6 +6,7 @@ import { ConfigurationEnvValidationModule } from './configuration/configuration.
 
 import { UserModule } from './modules/user/user.module';
 import { DepositModule } from './modules/deposit/deposit.module';
+import { ReviewModule } from './modules/review/review.module';
 
 @Module({
     imports: [
@@ -16,6 +17,8 @@ import { DepositModule } from './modules/deposit/deposit.module';
         UserModule,
 
         DepositModule,
+
+        ReviewModule,
     ]
 })
 export class AppModule { }

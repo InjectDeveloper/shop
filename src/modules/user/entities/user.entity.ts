@@ -1,3 +1,5 @@
+import { UserAvatarsArray } from './../constants/user.avatars.array';
+import { ReviewEntity } from './../../review/entities/review.entity';
 import { DepositEntity } from './../../deposit/entities/deposit.entity';
 import { UserRolesEnum } from './../constants/user.roles.enum';
 import {
@@ -17,7 +19,7 @@ import {
 export class UserEntity {
 
   @PrimaryGeneratedColumn()
-  public id: number;
+  public id?: number;
 
   @Column({ unique: true })
   public email: string;
@@ -31,8 +33,10 @@ export class UserEntity {
   @Column({nullable: true})
   public refreshToken: string
 
-  @Column()
-  public avatar: string
+  @Column({
+    default: "getRandomAvatar()"
+  })
+  public avatar?: string
 
   @Column({
     type: "real",
@@ -53,10 +57,8 @@ export class UserEntity {
   })
   public history?: string
 
-  @Column({
-    nullable: true
-  })
-  public reviews?: string
+  @OneToMany(() => ReviewEntity, (review) => review.user)
+  public reviews?: ReviewEntity
 
   @Column({
     type: "enum",
@@ -67,4 +69,9 @@ export class UserEntity {
 
   @CreateDateColumn()
   public created_at?: Date
+}
+
+
+const getRandomAvatar = () => {
+  return UserAvatarsArray[Math.floor(Math.random() * UserAvatarsArray.length)]
 }

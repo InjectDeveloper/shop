@@ -2,12 +2,13 @@ import { DepositStatusesEnum } from './../constants/deposit.statuses.enum';
 import { DepositTypesEnum } from './../constants/deposit.types.enum';
 import { UserEntity } from './../../user/entities/user.entity';
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import * as dayjs from 'dayjs'
 
 @Entity('deposits')
 export class DepositEntity {
 
   @PrimaryGeneratedColumn()
-  public id: number
+  public id?: number
 
   @ManyToOne(() => UserEntity, (user) => user.deposits)
   public user: UserEntity
@@ -18,9 +19,7 @@ export class DepositEntity {
   })
   public sum: number
 
-  @Column({
-    default: ""
-  })
+  @Column()
   public data: string
 
   @Column({
@@ -36,7 +35,7 @@ export class DepositEntity {
   })
   public status?: DepositStatusesEnum
 
-  @Column({})
+  @Column()
   public expires_in: Date
 
   @CreateDateColumn()
