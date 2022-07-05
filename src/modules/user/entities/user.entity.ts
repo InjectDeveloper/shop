@@ -14,7 +14,6 @@ import {
   JoinTable
 } from 'typeorm';
 
-
 @Entity('users')
 export class UserEntity {
 
@@ -33,10 +32,8 @@ export class UserEntity {
   @Column({nullable: true})
   public refreshToken: string
 
-  @Column({
-    default: "getRandomAvatar()"
-  })
-  public avatar?: string
+  @Column({})
+  public avatar: string
 
   @Column({
     type: "real",
@@ -69,9 +66,4 @@ export class UserEntity {
 
   @CreateDateColumn()
   public created_at?: Date
-}
-
-
-const getRandomAvatar = () => {
-  return UserAvatarsArray[Math.floor(Math.random() * UserAvatarsArray.length)]
 }

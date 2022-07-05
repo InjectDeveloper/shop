@@ -2,7 +2,6 @@ import { DepositStatusesEnum } from './../constants/deposit.statuses.enum';
 import { DepositTypesEnum } from './../constants/deposit.types.enum';
 import { UserEntity } from './../../user/entities/user.entity';
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import * as dayjs from 'dayjs'
 
 @Entity('deposits')
 export class DepositEntity {
