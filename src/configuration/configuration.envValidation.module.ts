@@ -9,6 +9,7 @@ import {ConfigModule} from "@nestjs/config";
                 //APP
                 PORT: Joi.number(),
                 SERVER_TIMEZONE: Joi.number().required(),
+                DEPOSIT_LIFETIME: Joi.number().required(),
 
                 //Database
                 POSTGRES_HOST: Joi.string().required(),
@@ -31,21 +32,17 @@ import {ConfigModule} from "@nestjs/config";
                 QIWI_PHONE: Joi.number().required(),
                 QIWI_API_KEY: Joi.string().required(),
                 QIWI_API_URL: Joi.string().required(),
-                QIWI_DEPOSIT_LIFETIME: Joi.number().required(),
 
                 //Crystal pay
                 CRYSTALLPAY_API_URL: Joi.string().required(),
                 CRYSTALPAY_API_KEY: Joi.string().required(),
                 CRYSTALPAY_CASHBOX_NAME: Joi.string().required(),
-                CRYSTALPAY_DEPOSIT_LIFETIME: Joi.number().required(),
 
                 //BLOCK.IO
                 BLOCKIO_BTC_API_KEY: Joi.string().required(),
                 BLOCKIO_LTC_API_KEY: Joi.string().required(),
                 BLOCKIO_API_URL: Joi.string().required(),
                 BLOCKIO_PIN: Joi.string().required(),
-                BLOCKIO_DEPOSIT_LIFETIME: Joi.number().required(),
-
             })
         })
     ],

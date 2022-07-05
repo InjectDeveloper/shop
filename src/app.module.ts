@@ -5,6 +5,7 @@ import { ConfigurationDataBaseModule } from './configuration/configuration.datab
 import { ConfigurationEnvValidationModule } from './configuration/configuration.envValidation.module';
 
 import { UserModule } from './modules/user/user.module';
+import { DepositModule } from './modules/deposit/deposit.module';
 
 @Module({
     imports: [
@@ -13,6 +14,8 @@ import { UserModule } from './modules/user/user.module';
         ConfigurationServeStaticModule,
 
         UserModule,
+
+        DepositModule,
     ]
 })
 export class AppModule { }

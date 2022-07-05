@@ -1,3 +1,4 @@
+import { DepositEntity } from './../../deposit/entities/deposit.entity';
 import { UserRolesEnum } from './../constants/user.roles.enum';
 import {
   Column,
@@ -39,10 +40,8 @@ export class UserEntity {
   })
   public balance?: number
 
-  @Column({
-    nullable: true
-  })
-  public deposits?: string
+  @OneToMany(() => DepositEntity, (deposit) => deposit.user)
+  public deposits?: DepositEntity
 
   @Column({
     nullable: true
