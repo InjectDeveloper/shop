@@ -1,7 +1,7 @@
-import { UserAvatarsArray } from './../constants/user.avatars.array';
-import { ReviewEntity } from './../../review/entities/review.entity';
-import { DepositEntity } from './../../deposit/entities/deposit.entity';
-import { UserRolesEnum } from './../constants/user.roles.enum';
+import { UserAvatarsArray } from "./../constants/user.avatars.array";
+import { ReviewEntity } from "./../../review/entities/review.entity";
+import { DepositEntity } from "./../../deposit/entities/deposit.entity";
+import { UserRolesEnum } from "./../constants/user.roles.enum";
 import {
   Column,
   CreateDateColumn,
@@ -11,59 +11,68 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  JoinTable
-} from 'typeorm';
+  JoinTable,
+} from "typeorm";
+import { UserFavouriteItemsEntity } from "./user.favouriteItems.entity";
+import { Expose } from "class-transformer";
+import { OrderEntity } from "../../order/entities/order.entity";
 
-@Entity('users')
+@Entity("users")
 export class UserEntity {
-
   @PrimaryGeneratedColumn()
   public id?: number;
 
   @Column({ unique: true })
   public email: string;
 
-  @Column({nullable: true})
+  @Expose({ groups: [UserRolesEnum.ADMIN] })
+  @Column({ nullable: true })
   public password?: string;
 
   @Column({ default: false })
   public isRegisteredWithGoogle?: boolean;
 
-  @Column({nullable: true})
-  public refreshToken: string
+  @Expose({ groups: [UserRolesEnum.ADMIN] })
+  @Column({ nullable: true })
+  public refreshToken: string;
 
-  @Column({})
-  public avatar: string
+  @Column()
+  public avatar: string;
 
   @Column({
     type: "real",
-    default: 0
+    default: 0,
   })
-  public balance?: number
+  public balance?: number;
 
-  @OneToMany(() => DepositEntity, (deposit) => deposit.user)
-  public deposits?: DepositEntity
-
-  @Column({
-    nullable: true
+  @OneToMany(() => DepositEntity, (deposit) => deposit.user, {
+    eager: true
   })
-  public favouriteItems?: string
+  public deposits?: DepositEntity[];
 
-  @Column({
-    nullable: true
+  @OneToMany(
+    () => UserFavouriteItemsEntity, (userFavourites) => userFavourites.user, {
+      eager: true
   })
-  public history?: string
+  public favouriteItems?: UserFavouriteItemsEntity[];
 
-  @OneToMany(() => ReviewEntity, (review) => review.user)
-  public reviews?: ReviewEntity
+  @OneToMany(() => OrderEntity, (order) => order.user, {
+    eager: true
+  })
+  public history?: OrderEntity[]
+
+  @OneToMany(() => ReviewEntity, (review) => review.user, {
+      eager: true
+  })
+  public reviews?: ReviewEntity[];
 
   @Column({
     type: "enum",
     enum: UserRolesEnum,
-    default: UserRolesEnum.USER
+    default: UserRolesEnum.USER,
   })
-  public role: UserRolesEnum
+  public role: UserRolesEnum;
 
   @CreateDateColumn()
-  public created_at?: Date
+  public created_at?: Date;
 }

@@ -8,5 +8,5 @@ export const UserAvatarsArray: Array<string> = [
   "https://i.ibb.co/TL74bbK/lite-Blue-dark-Red.png",
   "https://i.ibb.co/jgSN51p/multi-Color-default.png",
   "https://i.ibb.co/tL8d35W/multi-Color-neon.png",
-  "https://i.ibb.co/z4nX8f8/yellow-black.png"
-]
+  "https://i.ibb.co/z4nX8f8/yellow-black.png",
+];

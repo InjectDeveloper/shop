@@ -1,19 +1,25 @@
-import { UserEntity } from './../../user/entities/user.entity';
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { UserEntity } from "./../../user/entities/user.entity";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryColumn,
+} from "typeorm";
 
 @Entity("reviews")
 export class ReviewEntity {
   @PrimaryColumn()
-  public id: number
+  public id: number;
 
   @ManyToOne(() => UserEntity, (user) => user.reviews)
-  public user: UserEntity
+  public user: UserEntity;
 
   @Column({
-    type: "text"
+    type: "text",
   })
-  public text: string
+  public text: string;
 
   @CreateDateColumn()
-  public created_at: Date
+  public created_at: Date;
 }

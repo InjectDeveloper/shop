@@ -1,42 +1,47 @@
-import { DepositStatusesEnum } from './../constants/deposit.statuses.enum';
-import { DepositTypesEnum } from './../constants/deposit.types.enum';
-import { UserEntity } from './../../user/entities/user.entity';
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { DepositStatusesEnum } from "./../constants/deposit.statuses.enum";
+import { DepositTypesEnum } from "./../constants/deposit.types.enum";
+import { UserEntity } from "./../../user/entities/user.entity";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
-@Entity('deposits')
+@Entity("deposits")
 export class DepositEntity {
-
   @PrimaryGeneratedColumn()
-  public id?: number
+  public id?: number;
 
   @ManyToOne(() => UserEntity, (user) => user.deposits)
-  public user: UserEntity
+  public user: UserEntity;
 
   @Column({
-    type: 'real',
-    default: 0
+    type: "real",
+    default: 0,
   })
-  public sum: number
+  public sum: number;
 
   @Column()
-  public data: string
+  public data: string;
 
   @Column({
     type: "enum",
-    enum: DepositTypesEnum
+    enum: DepositTypesEnum,
   })
-  public type: DepositTypesEnum
+  public type: DepositTypesEnum;
 
   @Column({
     type: "enum",
     enum: DepositStatusesEnum,
-    default: DepositStatusesEnum.IN_PROCESS
+    default: DepositStatusesEnum.IN_PROCESS,
   })
-  public status?: DepositStatusesEnum
+  public status?: DepositStatusesEnum;
 
   @Column()
-  public expires_in: Date
+  public expires_in: Date;
 
   @CreateDateColumn()
-  public created_at?: Date
+  public created_at?: Date;
 }
