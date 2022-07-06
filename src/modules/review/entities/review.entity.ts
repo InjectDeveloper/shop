@@ -4,12 +4,12 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
-  PrimaryColumn,
+  PrimaryColumn, PrimaryGeneratedColumn,
 } from "typeorm";
 
 @Entity("reviews")
 export class ReviewEntity {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   public id: number;
 
   @ManyToOne(() => UserEntity, (user) => user.reviews)

@@ -43,7 +43,7 @@ export class AuthLocalController {
     const protectedUser = classToPlain(user, {groups: [user.role]})
 
     return {
-      user: protectedUser,
+      //user: protectedUser,
       tokens: await this.authLocalService.getPairOfTokens(user.id)
     }
   }

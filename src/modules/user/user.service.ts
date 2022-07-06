@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable, Logger } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { UserEntity } from "./entities/user.entity";
 import { Repository } from "typeorm";
@@ -7,12 +7,15 @@ import { UserAvatarsArray } from "./constants/user.avatars.array";
 import * as bcrypt from 'bcrypt';
 import {v4 as uuidv4} from 'uuid';
 import { DepositStatusesEnum } from "../deposit/constants/deposit.statuses.enum";
+import { ItemService } from "../item/item.service";
+import { UserFavouriteItemsEntity } from "./entities/user.favouriteItems.entity";
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(UserEntity)
-    private readonly usersRepository: Repository<UserEntity>,
+    @InjectRepository(UserEntity) private readonly usersRepository: Repository<UserEntity>,
+    @InjectRepository(UserFavouriteItemsEntity) private readonly usersFavouritesRepository: Repository<UserFavouriteItemsEntity>,
+    private readonly itemService: ItemService
   ) {}
 
   async create(userData: UserCreateDto): Promise<UserEntity> {
@@ -77,6 +80,7 @@ export class UserService {
   }
 
   async updateBalance(userId: number, sum: number) {
+    Logger.log("тут")
     const user = await this.usersRepository.findOne({
       where: {
         id: userId
@@ -86,7 +90,6 @@ export class UserService {
     await this.usersRepository.save(user)
     return user
   }
-
   async getActiveDeposit(userId: number) {
     const user = await this.usersRepository.findOne({
       where: {
@@ -108,5 +111,36 @@ export class UserService {
     }
 
     return {deposit, userId: user.id}
+  }
+
+  async favourite(user: UserEntity, itemId: number) {
+
+    const item = await this.itemService.getItemById(itemId)
+    if(!item) {
+      throw new HttpException("Такого предмета не существует", HttpStatus.BAD_REQUEST)
+    }
+
+    const favouriteRaw = await this.usersFavouritesRepository.findOne({
+      where: {
+        userId: user.id,
+        itemId: item.id
+      }
+    })
+
+    Logger.log(favouriteRaw)
+
+    if (favouriteRaw) {
+      await this.usersFavouritesRepository.delete(favouriteRaw)
+      return await this.getById(user.id)
+    } else {
+      const newUserFavourite = await this.usersFavouritesRepository.create({
+        user: user,
+        userId: user.id,
+        item: item,
+        itemId: item.id
+      })
+      await this.usersFavouritesRepository.save(newUserFavourite)
+      return await this.getById(user.id)
+    }
   }
 }

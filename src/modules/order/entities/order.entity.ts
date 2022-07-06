@@ -12,9 +12,12 @@ export class OrderEntity {
 
   @Column({
     type: "real",
+    nullable: true
   })
   public sum: number;
 
-  @OneToMany(() => ProductEntity, (product) => product.inOrder)
+  @OneToMany(() => ProductEntity, (product) => product.inOrder, {
+    eager: true, nullable: true, onDelete: "CASCADE"
+  })
   public products: ProductEntity[];
 }

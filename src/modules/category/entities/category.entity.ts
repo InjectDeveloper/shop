@@ -12,6 +12,8 @@ export class CategoryEntity {
   @Column()
   public img: string;
 
-  @OneToMany(() => ItemEntity, (item) => item.category)
+  @OneToMany(() => ItemEntity, (item) => item.category, {
+    onDelete: "CASCADE"
+  })
   public items: ItemEntity[];
 }

@@ -25,6 +25,7 @@ import { join } from "path";
             max: 10,
             connectionTimeoutMillis: 2000,
           },
+          autoLoadEntities: true,
           entities: [join(__dirname, "..", "/**/*.entity.js")],
         };
       },

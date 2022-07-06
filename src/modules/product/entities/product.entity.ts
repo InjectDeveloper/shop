@@ -7,15 +7,21 @@ export class ProductEntity {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @ManyToOne(() => ItemEntity, (item) => item.products)
+  @ManyToOne(() => ItemEntity, (item) => item.products, {
+    onDelete: "CASCADE"
+  })
   public item: ItemEntity;
 
   @Column()
   public data: string;
 
-  @Column()
+  @Column({
+    default: false
+  })
   public isSale: boolean;
 
-  @ManyToOne(() => OrderEntity, (order) => order.products)
+  @ManyToOne(() => OrderEntity, (order) => order.products, {
+    nullable: true, onDelete: "CASCADE"
+  })
   public inOrder: OrderEntity;
 }

@@ -14,7 +14,7 @@ import { UserRolesEnum } from "../../user/constants/user.roles.enum";
 @Entity("items")
 export class ItemEntity {
   @PrimaryGeneratedColumn()
-  public id: number;
+  public id?: number;
 
   @Column()
   public name: string;
@@ -25,7 +25,8 @@ export class ItemEntity {
   public description: string;
 
   @ManyToOne(() => CategoryEntity, (category) => category.items, {
-    eager: true
+    eager: true,
+    onDelete: "CASCADE"
   })
   public category: CategoryEntity;
 
@@ -44,6 +45,11 @@ export class ItemEntity {
   public tag: string;
 
   @Column({
+    default: 0
+  })
+  public left: number
+
+  @Column({
     type: "real",
   })
   public price: number;
@@ -52,13 +58,14 @@ export class ItemEntity {
   @OneToMany(
     () => UserFavouriteItemsEntity,
     (userFavourites) => userFavourites.item,
-    { eager: true }
+    { nullable: true, onDelete: "CASCADE" }
   )
-  public byUserFavourites: UserFavouriteItemsEntity[];
+  public byUserFavourites?: UserFavouriteItemsEntity[];
 
   @Expose({ groups: [UserRolesEnum.ADMIN] })
   @OneToMany(() => ProductEntity, (product) => product.item, {
-    eager: true
+    nullable: true,
+    onDelete: "CASCADE"
   })
-  public products: ProductEntity[];
+  public products?: ProductEntity[];
 }

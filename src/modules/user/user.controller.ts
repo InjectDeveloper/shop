@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards } from "@nestjs/common";
+import { Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
 import { AuthJwtAccessGuard } from "../auth/guards/auth.jwt.access.guard";
 import { UserReqDecorator } from "./decorators/user.req.decorator";
 import { UserEntity } from "./entities/user.entity";
@@ -18,5 +18,11 @@ export class UserController {
     const protectedUser = classToPlain(user, {groups: [user.role]})
 
     return protectedUser
+  }
+
+  @UseGuards(AuthJwtAccessGuard)
+  @Post("favourite/:id")
+  async favourite(@UserReqDecorator() user: UserEntity, @Param("id") itemId: number) {
+    return await this.userService.favourite(user, itemId)
   }
 }

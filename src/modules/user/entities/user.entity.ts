@@ -52,7 +52,8 @@ export class UserEntity {
 
   @OneToMany(
     () => UserFavouriteItemsEntity, (userFavourites) => userFavourites.user, {
-      eager: true
+      eager: true,
+      onDelete: "CASCADE"
   })
   public favouriteItems?: UserFavouriteItemsEntity[];
 
